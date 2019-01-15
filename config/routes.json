@@ -1,0 +1,18 @@
+{
+	"book/:id/buy": {
+		"controller": "Sales",
+		"method": "add",
+		"login": true,
+		"params": {
+			"id": "number"
+		}
+	},
+	"book/:id/borrow": {
+		"controller": "Book",
+		"method": "borrow",
+		"login": true,
+		"params": {
+			"id": "number"
+		}
+	}
+}
