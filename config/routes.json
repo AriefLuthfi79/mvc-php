@@ -1,4 +1,48 @@
 {
+	"books/:page": {
+		"controller": "Book",
+		"method": "getAllWithPage",
+		"params": {
+			"page": "number"
+		}
+	},
+	"books": {
+		"controller": "Book",
+		"method": "getAll"
+	},
+	"book/:id": {
+		"controller": "Book",
+		"method": "get",
+		"params": {
+			"id": "number"
+		}
+	},
+	"books/search": {
+		"controller": "Book",
+		"method": "search"
+	},
+	"login": {
+		"controller": "Customer",
+		"method": "login"
+	},
+	"sales": {
+		"controller": "Sales",
+		"method": "getByUser",
+		"login": true
+	},
+	"sales/:id": {
+		"controller": "Sales",
+		"method": "get",
+		"login": true,
+		"params": {
+			"id": "number"
+		}
+	},
+	"my-books": {
+		"controller": "Book",
+		"method": "getByUser",
+		"login": true
+	},
 	"book/:id/buy": {
 		"controller": "Sales",
 		"method": "add",
@@ -10,6 +54,14 @@
 	"book/:id/borrow": {
 		"controller": "Book",
 		"method": "borrow",
+		"login": true,
+		"params": {
+			"id": "number"
+		}
+	},
+	"book/:id/return": {
+		"controller": "Book",
+		"method": "returnBook",
 		"login": true,
 		"params": {
 			"id": "number"

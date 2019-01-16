@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 
 services:
   composer:
@@ -25,3 +25,17 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  mariadb:
+    build:
+      context: ./docker/database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwerty123
+      MYSQL_DATABASE: bookstore
