@@ -9,9 +9,9 @@ use Bookstore\Exceptions\NotFoundException;
 class CustomerModel extends AbstractModel
 {
 	public function get(int $userId): Customer {
-		$query = 'SELECT * FROM customer WHERE id = :user';
+		$query = 'SELECT * FROM customer WHERE id = :id';
 		$table = $this->db->prepare($query);
-		$table->execute(['user' => $userId]);
+		$table->execute(['id' => $userId]);
 
 		$row = $table->fetch();
 
