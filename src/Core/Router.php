@@ -1,6 +1,6 @@
 <?php
 
-namespace Bookstore\Core\Router;
+namespace Bookstore\Core;
 
 use Bookstore\Controllers\ErrorController;
 use Bookstore\Controllers\CustomerController;
@@ -10,11 +10,11 @@ class Router {
 	private static $regexPatterns = [
 		'number' => '\d+',
 		'string' => '\w'
-	]
+	];
 
 	public function __construct() {
 		$json = file_get_contents(__DIR__ . '/config/routes.json');
-		$this->routeMap = json_decode($json);
+		$this->routeMap = json_decode($json, true);
 	}
 
 	public function route(Request $request): string {
@@ -47,7 +47,7 @@ class Router {
 		$controllerName = '\Bookstore\Controllers\\' . $info['controller'] . 'Controller';
 		$controller = new $controllerName($request);
 
-		if (isset($info['login'] && $info['login'])) {
+		if (isset($info['login'])) {
 			if ($request->getCookies()->has('user')) {
 				$customerId = $request->getCookies()->get('user');
 				$controller->setCustomerId($customerId);
