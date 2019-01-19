@@ -10,4 +10,4 @@ $db = new PDO(
 	"qwerty123"
 );
 $book = new BookModel($db);
-var_dump($book->getAll(1, 8));
+$book->borrowBooks($book->get(2), 1);
