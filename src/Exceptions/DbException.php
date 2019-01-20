@@ -2,7 +2,7 @@
 
 namespace Bookstore\Exceptions;
 
-use Exception
+use Exception;
 
 class DbException extends Exception {
 }
