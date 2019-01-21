@@ -36,7 +36,6 @@ class Book
 			$this->stock--;
 			return true;
 		}
-
 		return false;
 	}
 
