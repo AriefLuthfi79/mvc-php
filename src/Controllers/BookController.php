@@ -3,6 +3,8 @@
 namespace Bookstore\Controllers;
 
 use Bookstore\Models\BookModel;
+use Bookstore\Exceptions\DbException;
+use Bookstore\Exceptions\NotFoundException;
 
 class BookController extends AbstractController
 {
