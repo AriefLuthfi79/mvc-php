@@ -1,0 +1,29 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+	{{ book.title }}
+{% endblock %}
+
+{% block content %}
+	<h2>{{ book.title }}</h2>
+	<h3>{{ book.author }}</h3>
+	<hr>
+	<p>
+		<strong>ISBN</strong> {{ book.isbn }}
+	</p>
+	<p>
+		<strong>Stock</strong> {{ book.stock }}
+	</p>
+	<p>
+		<strong>Price</strong> {{ book.price|number_format(2) }} €
+	</p>
+	<hr>
+	<h3>Action</h3>
+	<form method="post" action="/book/{{ book.id }}/borrow">
+		<input type="submit" value="Borrow">
+	</form>
+
+	<form method="post" action="/book/{{ book.id }}/buy">
+		<input type="submit" value="Buy">
+	</form>
+{% endblock %}

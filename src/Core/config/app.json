@@ -1,0 +1,7 @@
+{
+	"db": {
+		"user": "root",
+		"password": "qwerty123"
+	},
+	"log": "/var/www/bookstore.log"
+}

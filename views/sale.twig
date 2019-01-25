@@ -1,0 +1,25 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+	Sale {{ sale.id }}
+{% endblock %}
+
+{% block content %}
+	<table>
+		<thead>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Amount</th>
+			<th>Price</th>
+			<th></th>
+		</thead>
+		{% for book in sale.books %}
+			<tr>
+				<td>{{ book.title }}</td>
+				<td>{{ book.author }}</td>
+				<td>{{ book.stock }}</td>
+				<td>{{ (book.price * book.stock)|number_format(2) }} €</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

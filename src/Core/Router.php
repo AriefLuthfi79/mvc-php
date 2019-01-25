@@ -14,6 +14,7 @@ class Router {
 
 	public function __construct() {
 		$json = file_get_contents(__DIR__ . '/config/routes.json');
+		var_dump($json);
 		$this->routeMap = json_decode($json, true);
 	}
 

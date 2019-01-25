@@ -1,0 +1,15 @@
+{% block title %}
+	Login
+{% endblock %}
+
+{% block content %}
+	{% if errorMessage is defined %}
+		<strong>{{ errorMessage }}</strong>
+	{% endif %}
+
+	<form action="/login" method="post">
+		<label>Email</label>
+		<input type="text" name="email">
+		<input type="submit" value="Login">
+	</form>
+{% endblock %}

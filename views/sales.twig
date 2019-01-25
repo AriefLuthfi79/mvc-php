@@ -1,0 +1,23 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+	My Sales
+{% endblock %}
+
+{% block content %}
+	<table>
+		<thead>
+			<th>ID</th>
+			<th>Date</th>
+		</thead>
+
+	{% for sale in sales %}
+		<tr>
+			<td>{{ sale.id }}</td>
+			<td>{{ sale.date }}</td>
+			<td><a href="/sales/{{ sale.id }}">View</a></td>
+		</tr>
+	{% endfor %}
+	
+	</table>
+{% endblock %}
