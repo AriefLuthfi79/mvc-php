@@ -19,7 +19,7 @@ class BookController extends AbstractController
 		$properties = [
 			'books' => $books,
 			'currentPage' => $page,
-			'lastPage' => counte($books) < self::PAGE_LENGTH;
+			'lastPage' => count($books) < self::PAGE_LENGTH
 		];
 
 		return $this->render('books.twig', $properties);
@@ -54,7 +54,7 @@ class BookController extends AbstractController
 			'books' => $books,
 			'currentPage' => 1,
 			'lastPage' => true
-		]
+		];
 		return $this->render('books.twig', $properties);
 	}
 
@@ -92,7 +92,7 @@ class BookController extends AbstractController
 		}
 
 		try {
-			$bookModel->borrow($book, $this->customerId);
+			$bookModel->borrowBooks($book, $this->customerId);
 		} catch (DbException $e) {
 			$this->log->error('Error borrowing book ' . $e->getMessage());
 			$params = [

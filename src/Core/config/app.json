@@ -3,5 +3,5 @@
 		"user": "root",
 		"password": "qwerty123"
 	},
-	"log": "/var/www/bookstore.log"
+	"log": "/tmp/bookstore.log"
 }

@@ -7,7 +7,7 @@ use Bookstore\Models\CustomerModel;
 
 class CustomerController extends AbstractController
 {
-	public function login(string $email): string {
+	public function login(): string {
 		if (!$this->request->isPost()) {
 			return $this->render('login.twig', []);
 		}
@@ -31,7 +31,7 @@ class CustomerController extends AbstractController
 		}
 
 		setcookie('user', $customer->getId());
-		$newController = new BookController($this->request);
+		$newController = new BookController($this->di, $this->request);
 		return $newController->getAll();
 	}
 }

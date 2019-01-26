@@ -4,17 +4,19 @@ namespace Bookstore\Core;
 
 use Bookstore\Controllers\ErrorController;
 use Bookstore\Controllers\CustomerController;
+use Bookstore\Utils\DependencyInjector;
 
 class Router {
 	private $routeMap;
+	private $di;
 	private static $regexPatterns = [
 		'number' => '\d+',
 		'string' => '\w'
 	];
 
-	public function __construct() {
+	public function __construct(DependencyInjector $di) {
+		$this->di = $di;
 		$json = file_get_contents(__DIR__ . '/config/routes.json');
-		var_dump($json);
 		$this->routeMap = json_decode($json, true);
 	}
 
@@ -28,7 +30,7 @@ class Router {
 			}
 		}
 
-		$errorController = new ErrorController($request);
+		$errorController = new ErrorController($this->di, $request);
 		return $errorController->notFound();
 	}
 
@@ -46,32 +48,31 @@ class Router {
 
 	private function executeController(string $route, string $path, array $info, Request $request): string {
 		$controllerName = '\Bookstore\Controllers\\' . $info['controller'] . 'Controller';
-		$controller = new $controllerName($request);
+		$controller = new $controllerName($this->di, $request);
 
 		if (isset($info['login'])) {
 			if ($request->getCookies()->has('user')) {
 				$customerId = $request->getCookies()->get('user');
 				$controller->setCustomerId($customerId);
 			} else {
-				$errorController = new CustomerController($request);
+				$errorController = new CustomerController($this->di, $request);
 				return $errorController->login();
 			}
 		}
 
 		$params = $this->extractParams($route, $path);
-		return call_user_func_array([$controller, $info['method']], $params);		
+		return call_user_func_array([$controller, $info['method']], $params);
 	}
 
 	private function extractParams(string $route, string $path): array {
 		$params = [];
-
 		$pathParts = explode('/', $path);
 		$routeParts = explode('/', $route);
 
 		foreach ($routeParts as $key => $routePart) {
-			if (strpos($routePart, ':')) {
+			if (strpos($routePart, ':') === 0) {
 				$name = substr($routePart, 1);
-				$params[$name] = $pathParts[$key];
+				$params[$name] = $pathParts[$key+1];
 			}
 		}
 

@@ -9,29 +9,28 @@ use Monolog\Logger;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Monolog\Handler\StreamHandler;
+use Bookstore\Utils\DependencyInjector;
 
 abstract class AbstractController
 {
 	protected $request;
 	protected $db;
+	protected $di;
 	protected $config;
 	protected $view;
 	protected $log;
 	protected $customerId;
 
-	public function __construct(Request $request) {
+	public function __construct(DependencyInjector $di, Request $request) {
 		$this->request = $request;
-		$this->db = Database::getInstance();
-		$this->config = Config::getInstance();
+		$this->di = $di;
 
-		$loader = new Twig_Loader_Filesystem(__DIR__ . 'views');
-		$this->view = new Twig_Environment($loader);
+		$this->db = $di->get('PDO');
+		$this->config = $di->get('Utils\Config');
+		$this->view = $di->get('Twig_Environment');
+		$this->log = $di->get('Logger');
 
-		$this->log = new Logger('bookstore');
-		$logFile = $this->config->get('log');
-		$this->log->pushHandler(
-			new StreamHandler($logFile, Logger::DEBUG)
-		);
+		$this->customerId = $_COOKIE['id'];
 	}
 
 	public function setCustomerId(int $customerId) {
